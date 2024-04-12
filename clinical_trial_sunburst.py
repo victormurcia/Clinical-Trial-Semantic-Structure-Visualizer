@@ -3,8 +3,8 @@ import pandas as pd
 import plotly.express as px
 
 # Load the data
-expanded_df = pd.read_parquet("./full_test_sunburst.parquet.gzip")
-criteria_df = pd.read_parquet("./ct_criteria.parquet.gzip")
+expanded_df = pd.read_parquet("full_test_sunburst.parquet.gzip")
+criteria_df = pd.read_parquet("ct_criteria.parquet.gzip")
 
 st.set_page_config(layout="wide")
 
