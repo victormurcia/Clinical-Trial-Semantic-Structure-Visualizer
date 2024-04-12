@@ -4,6 +4,7 @@ import plotly.express as px
 
 # Load the data
 expanded_df = pd.read_parquet("full_test_sunburst.parquet.gzip")
+criteria_df = pd.read_parquet("ct_criteria.parquet.gzip")
 
 st.set_page_config(layout="wide")
 
@@ -22,21 +23,39 @@ nctid_selected = st.selectbox('Select or Enter NCTID', expanded_df['NCTID'].uniq
 # Filter dataframe based on selected NCTID
 df_filtered = expanded_df[expanded_df['NCTID'] == nctid_selected]
 
+col1, col2 = st.columns((1,3))  # Adjust the ratio as needed for your layout
+
+# Column 1 for trial details
+with col1:
+    st.subheader("Trial Details")
+    if nctid_selected:
+        trial_details = criteria_df[criteria_df['nct_id'] == nctid_selected]
+        if not trial_details.empty:
+            st.markdown("**Brief Title:**")
+            st.write(trial_details['brief_title'].values[0])
+            st.markdown("**Eligibility Criteria:**")
+            st.write(trial_details['criteria'].values[0])  # Assuming single match for NCTID
+        else:
+            st.write("No details available for the selected NCTID.")
+
 # Generate and display sunburst plot for the selected NCTID
 if not df_filtered.empty:
-    fig = px.sunburst(df_filtered, path=['NCTID', 'ENTITY', 'STY', 'SAB', 'CODE', 'STR'], 
-                      title="Clinical Trial Medical Concept Structure",
-                      width=600, height=800,
-                      color_discrete_sequence=px.colors.qualitative.Antique)
-    
-    # Customize layout
-    fig.update_layout(margin=dict(t=50, l=0, r=0, b=50),
-                      paper_bgcolor="black",
-                      title_text=f"Clinical Trial {nctid_selected} Medical Concept Structure",
-                      title_font=dict(size=25),
-                      title_x=0.27,
-                      font=dict(family="Arial, sans-serif", size=14, color="RebeccaPurple"))
-    
-    st.plotly_chart(fig, use_container_width=True)
+    # Column 2 for the sunburst chart
+        with col2:
+            st.subheader("Sunburst Chart")
+            fig = px.sunburst(df_filtered, path=['NCTID', 'ENTITY', 'STY', 'SAB', 'CODE', 'STR'], 
+                            title="Clinical Trial Medical Concept Structure",
+                            width=600, height=800,
+                            color_discrete_sequence=px.colors.qualitative.Antique)
+            
+            # Customize layout
+            fig.update_layout(margin=dict(t=50, l=0, r=0, b=50),
+                            paper_bgcolor="black",
+                            title_text=f"Clinical Trial {nctid_selected} Medical Concept Structure",
+                            title_font=dict(size=25),
+                            title_x=0.27,
+                            font=dict(family="Arial, sans-serif", size=14, color="RebeccaPurple"))
+            
+            st.plotly_chart(fig, use_container_width=True)
 else:
     st.write("No data available for the selected NCTID.")
