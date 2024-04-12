@@ -49,7 +49,7 @@ if not df_filtered.empty:
             st.subheader("Sunburst Chart")
             fig = px.sunburst(df_filtered, path=['NCTID', 'ENTITY', 'STY', 'SAB', 'CODE', 'STR'], 
                             title="Clinical Trial Medical Concept Structure",
-                            width=600, height=800,
+                            width=600, height=600,
                             color_discrete_sequence=px.colors.qualitative.Antique)
             
             # Customize layout
