@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+import os
+print("Current Directory:", os.getcwd())
+print("Files in Directory:", os.listdir('.'))
+
 # Load the data
 expanded_df = pd.read_parquet("full_test_sunburst.parquet.gzip")
 criteria_df = pd.read_parquet("ct_criteria.parquet.gzip")
