@@ -19,7 +19,9 @@ st.title('Clinical Trial Medical Concept Visualization')
 st.markdown("""
 This app visualizes the medical concepts associated with clinical trials based on the selected trial ID (NCTID). 
 
-The entities were extracted using a LLM. **NOTE: This is a very early version of the LLM and as such the performance in terms of extraction accuracy is not great at times. The aim is more to show how such hierarchical information can be presented.** 
+The entities were extracted using a LLM. 
+
+**NOTE: This is a very early version of the LLM and as such the performance in terms of extraction accuracy is not great at times. The aim is more to show how such hierarchical information can be presented.** 
 
 Select a trial to explore the hierarchical structure of entities, codes, and categories related to that trial in a detailed sunburst chart.
 """)
